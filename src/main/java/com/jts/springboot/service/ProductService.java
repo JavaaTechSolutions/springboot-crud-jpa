@@ -1,11 +1,13 @@
 package com.jts.springboot.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jts.springboot.entity.Order;
 import com.jts.springboot.entity.Products;
 import com.jts.springboot.repository.ProductRepository;
 
@@ -37,7 +39,13 @@ public class ProductService {
 	}
 
 	public List<Products> findAllProduct() {
-		return productRepository.findAll();
+//		List<String> desc = Arrays.asList("Test Demo", "Mobile Demo");
+		return productRepository.findAllProductWithOrder();
+	}
+	
+	public List<String> findAllProductDistinct() {
+//		List<String> desc = Arrays.asList("Test Demo", "Mobile Demo");
+		return productRepository.findAllProductById();
 	}
 
 	public Products findProductById(long id) {
@@ -59,5 +67,9 @@ public class ProductService {
 		}
 		
 		throw new RuntimeException("Product Not available " + id);
+	}
+	
+	public List<Order> findAllOrder() {
+		return productRepository.findOrder();
 	}
 }

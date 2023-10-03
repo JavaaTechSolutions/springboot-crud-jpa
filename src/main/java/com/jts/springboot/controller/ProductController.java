@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jts.springboot.entity.Order;
 import com.jts.springboot.entity.Products;
 import com.jts.springboot.service.ProductService;
 
@@ -27,6 +28,17 @@ public class ProductController {
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Products>> findAll() {
 		return ResponseEntity.ok().body(productService.findAllProduct());
+	}
+	
+	
+	@GetMapping("/findAllOrder")
+	public ResponseEntity<List<Order>> findAllOrder() {
+		return ResponseEntity.ok().body(productService.findAllOrder());
+	}
+	
+	@GetMapping("/findAllProductDistinct")
+	public ResponseEntity<List<String>> findAllProductDistinct() {
+		return ResponseEntity.ok().body(productService.findAllProductDistinct());
 	}
 	
 	@GetMapping("/findById/{id}")
