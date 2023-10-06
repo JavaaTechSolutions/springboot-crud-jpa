@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.jts.springboot.entity.Order;
@@ -41,6 +45,17 @@ public class ProductService {
 	public List<Products> findAllProduct() {
 //		List<String> desc = Arrays.asList("Test Demo", "Mobile Demo");
 		return productRepository.findAllProductWithOrder();
+	}
+	
+	public Page<Products> findAllWithPagination() {
+		Sort srt = Sort.by("name");
+		Pageable pageable = PageRequest.of(0, 10, srt.ascending().and(Sort.by("description").descending()));
+		return productRepository.findAll(pageable);
+	}
+	
+	public List<Products> findAllWithSorting() {
+		Sort srt = Sort.by("name");
+		return productRepository.findAll(srt);
 	}
 	
 	public List<String> findAllProductDistinct() {

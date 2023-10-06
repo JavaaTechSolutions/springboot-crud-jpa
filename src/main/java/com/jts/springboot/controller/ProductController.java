@@ -1,8 +1,11 @@
 package com.jts.springboot.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +29,17 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Products>> findAll() {
-		return ResponseEntity.ok().body(productService.findAllProduct());
+	public ResponseEntity<?> findAll() {
+		
+		Page<Products> prods = productService.findAllWithPagination();
+		
+		Map<String, Object> res = new HashMap<>();
+		res.put("produts", prods.getContent());
+		res.put("current-page", prods.getNumber());
+		res.put("total-items", prods.getTotalElements());
+		res.put("total-pages", prods.getTotalPages());
+		
+		return ResponseEntity.ok().body(res);
 	}
 	
 	
